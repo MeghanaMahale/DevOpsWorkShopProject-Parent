@@ -3,13 +3,15 @@ pipeline {
 
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
-        maven "3.6.3"
+        maven "maven 3.4"
     }
 
     stages {
         stage('Build and deploy') {
-            agent any
-		
+            agent 
+	    {
+                label 'node_machine'
+            }
 	    steps
 	    {
 		echo "Build and deploy stage"
@@ -32,16 +34,18 @@ pipeline {
         }
 
         stage('Server-Deploy') {
-          agent any
+            agent
+	    {
+               label 'ansible'
+            }
 	    steps 	   
 	    {
 	       echo "server deploy stage"
-     	       git branch: 'Meghana_tools', url: 'https://github.com/minutuscomputing/devops-workshop-tools.git', credentialsId: ''
+     	       git branch: 'Meghana_tools', url: 'https://github.com/minutuscomputing/devops-workshop-tools.git'
 	       sh 'ansible-galaxy install geerlingguy.java'
-              // sh 'ansible-playbook ./ansible/deploy.yml --extra-vars "artifact_id=${env.JOB_NAME}"'               
-                sh "ansible-playbook ./ansible/example/deploy.yml --extra-vars 'artifact_id=${env.JOB_NAME}' "
-            
-	    }         
+              // sh 'ansible-playbook ./ansible/deploy_neelam.yml --extra-vars "artifact_id=${env.JOB_NAME}"'               
+                sh "ansible-playbook ./playbooks/deploy.yml --extra-vars 'artifact_id=${env.JOB_NAME}' "
+            }         
         }
 
     }
