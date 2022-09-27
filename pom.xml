@@ -53,5 +53,18 @@
 			</plugin>
 		</plugins>
 	</build>
+	<distributionManagement>
+               <repository>
+                       <id>nexus</id>
+                       <name>Releases</name>
+                       <url>http://52.66.82.175:8081/repository/maven-release-minutus/</url>
+               </repository>
+               <snapshotRepository>
+                       <id>nexus</id>
+                       <name>Snapshot</name>
+                       <url>http://52.66.82.175:8081/repository/maven-snapshot-minutus/</url>
+               </snapshotRepository>
+       </distributionManagement>
+
 
 </project>
