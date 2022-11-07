@@ -19,7 +19,7 @@ pipeline {
                 git branch: 'Meghana_WS', url: 'https://github.com/MeghanaMahale/DevOpsWorkShopProject-Parent.git'
 
                 // Run Maven on a Unix agent.
-                sh "mvn -Dmaven.test.failure.ignore=true -Djob_name=${JOB_NAME} -Dv=${BUILD_NUMBER} clean test package deploy"
+                sh "mvn -B -ntp -Dmaven.test.failure.ignore clean test package deploy"
              }
 	     post
 	     {
@@ -42,7 +42,7 @@ pipeline {
 	       echo "server deploy stage"
      	       git branch: 'Meghana_tools', url: 'https://github.com/Meghana_tools/devops-workshop-tools.git'
 	       sh 'ansible-galaxy install geerlingguy.java'
-                sh "ansible-playbook ./ansible/example/deploy.yml --extra-vars 'artifact_id=${env.JOB_NAME}' "
+                sh "ansible-playbook ./ansible/example/deploy.yml --extra-vars 'artifact_id=crm' "
             
 	    }         
         }
