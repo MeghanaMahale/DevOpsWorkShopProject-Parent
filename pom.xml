@@ -60,8 +60,8 @@
                        <url>http://52.66.82.175:8081/repository/minutus-release/</url>
                </repository>
                <snapshotRepository>
-                       <id>nexus</id>
-                       <name>nexus-snapshot</name>
+                       <id>nexus-snapshots</id>
+                       <name>nexus</name>
                        <url>http://52.66.82.175:8081/repository/minutus-snapshots/</url>
                </snapshotRepository>
        </distributionManagement>
