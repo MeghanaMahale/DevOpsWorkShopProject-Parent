@@ -57,12 +57,12 @@
                <repository>
                        <id>nexus</id>
                        <name>Releases</name>
-                       <url>http://18.208.193.114:8081/repository/minutus-release/</url>
+                       <url>http://52.66.82.175:8081/repository/minutus-release/</url>
                </repository>
                <snapshotRepository>
                        <id>nexus</id>
-                       <name>Snapshot</name>
-                       <url>http://18.208.193.114:8081/repository/minutus-snapshot/</url>
+                       <name>nexus-snapshot</name>
+                       <url>http://52.66.82.175:8081/repository/minutus-snapshots/</url>
                </snapshotRepository>
        </distributionManagement>
 
