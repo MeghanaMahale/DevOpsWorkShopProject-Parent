@@ -8,7 +8,7 @@
 		<version>2.1.4.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com2</groupId>
+	<groupId>crm</groupId>
 	<artifactId>${job_name}</artifactId>
 	<version>0.0.${v}-SNAPSHOT</version>
 	<name>crm</name>
