@@ -57,13 +57,13 @@
 	<repository>
 		<id>deployment</id>
 		<name>minutus-release</name>
-		<url>http://44.210.242.106:8081/repository/minutus-release/</url>
+		<url>http://3.238.253.66:8081/repository/minutus-release/</url>
 	</repository>
  
 	<snapshotRepository>
 		<id>deployment</id>
 		<name>minutus-snapshot</name>
-		<url>http://44.210.242.106:8081/repository/minutus-snapshot/</url>
+		<url>http://3.238.253.66:8081/repository/minutus-snapshot/</url>
 	</snapshotRepository>
 
      </distributionManagement>
