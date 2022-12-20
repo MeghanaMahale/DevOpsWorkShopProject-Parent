@@ -1,57 +1,66 @@
 pipeline {
-    agent none
+    agent any
 
     tools {
-        // Install the Maven version configured as "M3" and add it to the path.
-        maven "3.6.3"
+        maven "Default"
     }
 
     stages {
         stage('Build') {
-            agent 
-	    {
-                label 'node'
-            }
+	    
 	    steps
 	    {
-	        //def mavenPom = readMavenPom 'pom.xml'
-                // clone code from a GitHub repository
+	        
                 git branch: 'master', url: 'https://github.com/MeghanaMahale/DevOpsWorkShopProject-Parent.git'
 
-                // Run Maven on a Unix agent.
-               
-                sh "mvn -Dmaven.test.failure.ignore=true -Djob_name=${JOB_NAME} -Dv=${BUILD_NUMBER} clean test package deploy "
+                
+                sh "mvn -Dmaven.test.failure.ignore=true clean package "
 
              }
+             
         }
-        stage('Maven-Deploy') {
-  	    agent
-	    {
-                label 'node'
+        
+             stage ('CODE ANALYSIS WITH CHECKSTYLE'){
+            steps {
+                sh 'mvn checkstyle:checkstyle'
             }
-	    steps 
-	    {
-	        sh 'mvn deploy'
-   	    }    	    
-            post
-	    {
-            
+            post {
                 success {
-                    junit '**/target/surefire-reports/TEST-*.xml'
-                    archiveArtifacts 'target/*.jar'
+                    echo 'Generated Analysis Result'
                 }
-           }
-        }
-       stage('Server-Deploy') {
-            agent
-	    {
-               label 'ansible'
             }
-	    steps 	   
-	    {
-     	       git branch: 'master', url: 'https://github.com/MeghanaMahale/deploy_playbook.git'
-               sh " ansible-playbook -i inventory test.yml --extra-vars 'artifact_id=${env.JOB_NAME}'"               
-            }  
+        }
+        stage('SonarQube analysis') {
+            environment {
+             scannerHome = tool 'sonarqube-4.7.0'
+          }
+          
+          steps{
+              withSonarQubeEnv('sonarqube-9.7.1') { 
+                sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=demoapp-project \
+                   -Dsonar.projectName=demoapp-project \
+                   -Dsonar.projectVersion=0.0.1 \
+                   -Dsonar.sources=src/ \
+                   -Dsonar.java.binaries=target/test-classes/com/crm/crm/ \
+                   -Dsonar.junit.reportsPath=target/surefire-reports/ \
+                   -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml"
+              }
+          }
        }
+       
+       stage('Quality Gates') {
+          steps{
+           echo "test1"
+				sleep time: 30000, unit: 'MILLISECONDS'
+				echo "test2"
+				script {
+						echo "Waiting for Quality gate"
+						def qualitygate = waitForQualityGate()
+                        if (qualitygate.status != "OK") {
+                           error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
+              }
+				}
+    }
+}
     }
 }
