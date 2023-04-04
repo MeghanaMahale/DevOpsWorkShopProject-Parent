@@ -53,19 +53,17 @@
 			</plugin>
 		</plugins>
 	</build>
-     <distributionManagement>
-	<repository>
-		<id>deployment</id>
-		<name>minutus-release</name>
-		<url>http://3.238.253.66:8081/repository/minutus-release/</url>
-	</repository>
- 
-	<snapshotRepository>
-		<id>deployment</id>
-		<name>minutus-snapshot</name>
-		<url>http://3.238.253.66:8081/repository/minutus-snapshot/</url>
-	</snapshotRepository>
-
-     </distributionManagement>
+         <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <name>Internal Releases</name>
+            <url>http://devops.platform.minutuscloud.com/nexus/repository/minutus-release/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus</id>
+            <name>Internal Snapshot Releases</name>
+            <url>http://devops.platform.minutuscloud.com/nexus/repository/minutus-snapshot/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>
